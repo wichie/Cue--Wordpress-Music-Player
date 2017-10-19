@@ -1,0 +1,785 @@
+.mejs-layers-bg{
+    position:absolute;
+    display: block; 
+    top:-220px;
+    left: 0;
+    height:750px;
+    width: 100%;
+    background-size:100% 100%;
+    -webkit-filter:blur(20px);
+    -moz-filter:blur(20px);
+    -ms-filter:blur(20px);
+    -webkit-transform:translateZ(0);
+    -moz-transform:translateZ(0);
+    -o-transform:translateZ(0);
+    -ms-transform:translateZ(0);
+    transform:translateZ(0);
+    -webkit-backface-visibility:hidden;
+    -webkit-perspective:1000;
+    opacity:1 !important;
+    z-index:0;
+    overflow:scroll !important;
+}
+
+is-closed .mejs-layers-bg{
+    display: none;
+}
+
+.cue-skin-cuebar.mejs-container .mejs-layers{
+    overflow: hidden;
+}
+
+.cue-playlist-container .mejs-previous button:before , .cue-playlist-container .mejs-next button:before , .mejs-play button:before , .mejs-pause button:before , .mejs-mute button:before , .mejs-unmute button:before , .cue-playlist-container .is-closed button:before , .cue-playlist-container .is-open button:before , .cue-playlist-container .mejs-toggle-player-button button:before , .cue-playlist-container .is-closed .mejs-toggle-player-button button:before {
+	font-family: FontAwesome;
+	font-size: 15px;
+	margin-left: 4px;
+	line-height: 2.4;
+}
+
+.cue-playlist-container .mejs-previous button:before {
+	content: "\f048";
+}
+
+.cue-playlist-container .mejs-next button:before {
+	content: "\f051";
+}
+
+.cue-playlist-container .mejs-play button:before {
+	content: "\f04b";
+}
+
+.cue-playlist-container .mejs-pause button:before {
+	content: "\f04c";
+}
+
+.cue-playlist-container .mejs-mute button:before {
+	content: "\f028";
+}
+
+.cue-playlist-container .mejs-unmute button:before {
+	content: "\f026";
+}
+
+.cue-playlist-container .mejs-toggle-playlist-button button:before {
+	content: "\f0c9";
+}
+
+.cue-playlist-container .mejs-toggle-playlist-button.is-open button:before {
+	content: "\f00d";
+}
+
+.cue-playlist-container .mejs-toggle-player-button button:before {
+	content: "\f0d9";
+}
+
+.cue-playlist-container .is-closed .mejs-toggle-player-button button:before {
+	content: "\f0da";
+}
+
+.cue-audio,.cuebar.is-loading,.cuebar>svg {
+	display: none
+}
+
+.cuebar {
+	border-width: 0;
+	clear: both;
+	counter-reset: li;
+	float: left;
+	font-size: 11px;
+	height: 50px;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	text-align: left;
+	width: 100%;
+	z-index: 9999
+}
+
+.cuebar .cue-tracks {
+	border-style: solid;
+	border-width: 1px 0 0;
+	display: none;
+	max-height: none;
+	overflow: auto;
+	position: absolute;
+	right: 0;
+	left: 0;
+	bottom: 100%;
+	width: 100%
+}
+
+.cuebar .cue-tracks-list {
+	font-family: sans-serif;
+	font-size: 14px;
+	list-style-position: inside;
+	margin: 0;
+	padding: 0;
+	width: 100%
+}
+
+.cuebar .cue-track {
+	color: #666;
+	cursor: pointer;
+	display: table-row;
+	width: 100%
+}
+
+.cuebar .cue-track:before {
+	content: counter(li);
+	counter-increment: li;
+	text-align: center;
+	width: 20px
+}
+
+.cuebar .cue-track .cue-track-artist {
+	display: block;
+	font-size: 12px
+}
+
+.cuebar .cue-track .cue-track-length {
+	display: none;
+	width: 50px
+}
+
+.cuebar .cue-track .cue-track-title {
+	color: #333;
+	display: block
+}
+
+.cue-playlist .cue-track.is-playing:before {
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBmaWxsPSIjNjY2NjY2IiB2aWV3Qm94PSIwIDAgMzIgMzIiIGhlaWdodD0iMjQiIHdpZHRoPSIyNCI+CgkJCQkJCTxwYXRoIGQ9Ik0gMTAsMTJsIDYtNmwwLDIwIGwtNi02bC02LDAgbDAtOCBsIDYsMCB6TSAyMS42NTYsMTAuMzQ0bCAxLjQyMi0xLjQyMnEgMS4zNzUsMS4zOTEgMi4xNDgsMy4yMTl0IDAuNzczLDMuODU5cTAsMS4zNTkgLTAuMzU5LDIuNjU2dC0xLjAwOCwyLjM5OHQtMS41NTUsMi4wMjNsLTEuNDIyLTEuNDIycSAxLjEwOS0xLjEwOSAxLjcyNy0yLjU3dCAwLjYxNy0zLjA4NnQtMC42MTctMy4wODZ0LTEuNzI3LTIuNTd6TSAxOC44MjgsMTMuMTcybCAxLjQyMi0xLjQyMnEgMC40MDYsMC40MjIgMC43MjcsMC44OTh0IDAuNTQ3LDEuMDE2dCAwLjM1MiwxLjEzM3QgMC4xMjUsMS4yMDMgcTAsMS4yMTkgLTAuNDYxLDIuMzEzdC0xLjI4OSwxLjkzOGwtMS40MjItMS40MjJxIDEuMTcyLTEuMTcyIDEuMTcyLTIuODI4dC0xLjE3Mi0yLjgyOHoiPjwvcGF0aD4KCQkJCQk8L3N2Zz4=);background-position: 50% 50%;
+	background-repeat: no-repeat;
+	content: ""
+}
+
+.cuebar .cue-track-cell,.cuebar .cue-track:before {
+	border-style: solid;
+	border-width: 0 0 1px;
+	display: table-cell;
+	line-height: 1.3;
+	padding: 12px 20px;
+	vertical-align: middle
+}
+
+.cuebar.is-tracklist-open .cue-tracks {
+	display: block
+}
+
+.cuebar.is-tracklist-open .cue-tracks .cue-tracks-list {
+	display: table
+}
+
+@media only screen and (min-width:769px) {
+	.cuebar .cue-track .cue-track-artist,.cuebar .cue-track .cue-track-title {
+		display: inline-block;
+		padding-right: 20px;
+		width: 40%
+	}
+
+	.cuebar .cue-track .cue-track-length {
+		display: table-cell
+	}
+
+	.cuebar.is-closed {
+		height: 50px;
+		opacity: .5;
+		transition: opacity .2s;
+		width: 74px
+	}
+
+	.cuebar.is-closed .cue-tracks {
+		visibility: hidden
+	}
+
+	.cuebar.is-closed.is-playing,.cuebar.is-closed:hover {
+		opacity: 1
+	}
+}
+
+.cue-skin-cuebar.mejs-container {
+	background: 0 0;
+	line-height: 50px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0
+}
+
+.cue-skin-cuebar.mejs-container .mejs-layers {
+	position: absolute;
+	top: 0;
+	right: 50px;
+	bottom: 0;
+	left: 50px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-track-artwork {
+	display: none;
+	opacity: .5;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+	width: 50px;
+	z-index: 20
+}
+
+.cue-skin-cuebar.mejs-container .mejs-track-artwork img {
+	display: block;
+	height: 100%;
+	max-width: auto;
+	width: 100%
+}
+
+.cue-skin-cuebar.mejs-container .mejs-track-details {
+	display: block;
+	font-size: 13px;
+	line-height: 1.3;
+	overflow: hidden;
+	pointer-events: none;
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	left: 20px;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	vertical-align: middle;
+	white-space: nowrap;
+	z-index: 25
+}
+
+.cue-skin-cuebar.mejs-container .mejs-track-details .mejs-track-artist {
+	display: table-footer-group;
+	font-size: 12px;
+	opacity: .75
+}
+
+.cue-skin-cuebar.mejs-container .mejs-track-details .mejs-track-title {
+	display: table-header-group
+}
+
+.has-artwork .cue-skin-cuebar.mejs-container .mejs-track-artwork {
+	display: block;
+	position: absolute;
+	left: -50px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	background: 0 0;
+	border-style: solid;
+	border-width: 0 50px;
+	display: block;
+	height: auto;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: auto
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls div {
+	height: auto;
+	width: auto
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls svg {
+	fill: currentColor;
+	height: 16px;
+	margin-top: -8px;
+	margin-left: -8px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 16px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-button button {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	-webkit-transition: none;
+	-moz-transition: none;
+	-ms-transition: none;
+	-o-transition: none;
+	transition: none;
+	background: 0 0;
+	border-width: 0;
+	height: 32px;
+	margin: -16px 0 0 -16px;
+	outline: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 32px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-button button:active,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-button button:focus {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	background: 0 0;
+	outline: 0
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-playpause-button {
+	cursor: pointer;
+	display: block;
+	height: 100%;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: -41px;
+	text-align: left;
+	width: 32px;
+	z-index: 100
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-playpause-button svg {
+	height: 32px;
+	margin: -16px 0 0 -16px;
+	width: 32px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-playpause-button.mejs-pause .cue-icon-play,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-playpause-button.mejs-play .cue-icon-pause {
+	display: none
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-next-button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-previous-button {
+	-webkit-transition: opacity .2s ease 0s;
+	-moz-transition: opacity .2s ease 0s;
+	-ms-transition: opacity .2s ease 0s;
+	-o-transition: opacity .2s ease 0s;
+	transition: opacity .2s ease 0s;
+	cursor: pointer;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: -54px;
+	padding: 0;
+	text-align: center;
+	width: 32px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-previous-button {
+	position: absolute;
+	left: -122px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button {
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: -122px;
+	bottom: 0;
+	width: 24px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button button {
+	margin-left: 0;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	text-align: center;
+	width: 100%
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button svg {
+	height: 10px;
+	margin: -5px 0 0 -8px;
+	width: 10px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button .cue-icon-right-arrow {
+	display: none
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-playlist-button {
+	-webkit-transition: opacity .2s ease 0s;
+	-moz-transition: opacity .2s ease 0s;
+	-ms-transition: opacity .2s ease 0s;
+	-o-transition: opacity .2s ease 0s;
+	transition: opacity .2s ease 0s;
+	cursor: pointer;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: -41px;
+	width: 32px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-playlist-button.is-closed .cue-icon-close,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-playlist-button.is-open .cue-icon-list {
+	display: none
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button {
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: -46px;
+	bottom: 0;
+	width: 32px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button svg {
+	height: 24px;
+	margin: -12px 0 0 -12px;
+	width: 24px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button .mejs-volume-slider {
+	height: 150px;
+	margin-left: -25px;
+	position: absolute;
+	top: -150px;
+	left: 50%;
+	width: 50px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-current,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-total {
+	height: 110px;
+	position: absolute;
+	top: 20px;
+	left: 24px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-handle {
+	border-radius: 8px;
+	height: 16px;
+	position: absolute;
+	top: 12px;
+	left: 17px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail {
+	background: 0 0;
+	height: 100%;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail .mejs-time-total {
+	outline: none;    
+	background: 0 0;
+	height: 100%;
+	margin: 0;
+	width: 100%
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail .mejs-time-total .mejs-time-current {
+	height: 100%;
+	position: relative
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail .mejs-time-total .mejs-time-loaded {
+	height: 50px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail .mejs-time-float {
+	background: #fcfcfc;
+	border-color: #969696;
+	color: #000;
+	position: absolute;
+	top: -23px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail .mejs-time-float .mejs-time-float-corner {
+	border-color: #969696 transparent transparent;
+	border-style: solid inset inset;
+	border-width: 6px 6px 0;
+	position: absolute;
+	top: 15px;
+	left: 12px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail .mejs-time-float .mejs-time-float-corner:before {
+	border-width: 5px 5px 0;
+	border-color: #fcfcfc transparent transparent;
+	border-style: solid inset inset;
+	content: "";
+	height: 0;
+	position: absolute;
+	top: -6px;
+	left: -5px;
+	width: 0
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail .mejs-time-float .mejs-time-float-corner:after {
+	background: #999;
+	content: "";
+	height: 50px;
+	position: absolute;
+	top: 1px;
+	left: 0;
+	width: 1px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	opacity: .7;
+	padding: 0;
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	right: 20px;
+	bottom: 0
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time span {
+	display: none;
+	font-size: 12px;
+	line-height: 50px
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-next-button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-previous-button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button {
+	display: none
+}
+
+.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-layers {
+	position: absolute;
+	right: 0
+}
+
+.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls {
+	border-right-width: 0
+}
+
+.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls .mejs-next-button,.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls .mejs-previous-button,.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-playlist-button {
+	display: none
+}
+
+@media only screen and (min-width:480px) {
+	.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time {
+		display: block
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time .mejs-currenttime {
+		display: inline
+	}
+}
+
+@media only screen and (min-width:769px) {
+	.cue-skin-cuebar.mejs-container .mejs-layers {
+		right: 122px;
+		left: 144px
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-track-details .mejs-track-artist {
+		display: inline;
+		font-size: inherit;
+		opacity: 1
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-track-details .mejs-track-artist:after {
+		content: " - "
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-track-details .mejs-track-artist:empty {
+		display: none
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-track-details .mejs-track-title {
+		display: inline
+	}
+
+	.has-artwork .cue-skin-cuebar.mejs-container .mejs-track-artwork {
+		opacity: 1;
+		position: absolute;
+		left: 0
+	}
+
+	.has-artwork .cue-skin-cuebar.mejs-container .mejs-track-details {
+		position: absolute;
+		left: 70px
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-controls {
+		border-width: 0 122px 0 144px
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-controls .mejs-button {
+		display: block
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-controls .mejs-playpause-button {
+		position: absolute;
+		left: -88px
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-playlist-button {
+		position: absolute;
+		right: -84px
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time {
+		display: block
+	}
+
+	.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time span {
+		display: inline
+	}
+
+	.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-layers {
+		left: 50px
+	}
+
+	.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls {
+		border-right-width: 84px;
+		border-left-width: 50px
+	}
+
+	.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls .mejs-playpause-button {
+		position: absolute;
+		left: -41px
+	}
+
+	.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls .mejs-next-button,.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls .mejs-previous-button,.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-playlist-button {
+		display: none
+	}
+
+	.cuebar.cue-tracks-count-1 .cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button {
+		position: absolute;
+		right: -84px
+	}
+
+	.cuebar.is-closed .cue-skin-cuebar.mejs-container .mejs-layers {
+		position: static
+	}
+
+	.cuebar.is-closed .cue-skin-cuebar.mejs-container .mejs-layers>* {
+		display: none
+	}
+
+	.cuebar.is-closed .cue-skin-cuebar.mejs-container .mejs-controls {
+		border-right-width: 24px;
+		border-left-width: 50px;
+		width: 74px
+	}
+
+	.cuebar.is-closed .cue-skin-cuebar.mejs-container .mejs-controls>* {
+		display: none
+	}
+
+	.cuebar.is-closed .cue-skin-cuebar.mejs-container .mejs-controls .mejs-playpause-button {
+		display: block;
+		position: absolute;
+		left: -41px;
+		z-index: 100
+	}
+
+	.cuebar.is-closed .cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button {
+		display: block;
+		position: absolute;
+		right: -24px
+	}
+
+	.cuebar.is-closed .cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button .cue-icon-left-arrow {
+		display: none
+	}
+
+	.cuebar.is-closed .cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button .cue-icon-right-arrow {
+		display: block;
+		margin-left: -3px
+	}
+
+	.cuebar.is-closed.has-artwork .cue-skin-cuebar.mejs-container .mejs-track-artwork {
+		display: block;
+		opacity: .5
+	}
+}
+
+.cuebar {
+	background: #14181a
+}
+
+.cuebar .cue-tracks {
+	background: #fff;
+	background: rgba(255,255,255,.95);
+	border-color: #dadada;
+	border-color: rgba(0,0,0,.1)
+}
+
+.cuebar .cue-track.is-current {
+	background: #f1f2f2;
+	background: rgba(0,0,0,.05)
+}
+
+.cuebar .cue-track-cell,.cuebar .cue-track:before {
+	border-color: #dadada;
+	border-color: rgba(0,0,0,.1)
+}
+
+.cue-skin-cuebar.mejs-container .mejs-layers {
+	color: #fff
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls {
+	border-right-color: #14181a;
+	border-left-color: #14181a
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-pause button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-pause button:hover,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-play button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-play button:hover,.cue-skin-cuebar.mejs-container .mejs-controls button {
+	color: #fff
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-next-button button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-previous-button button {
+	color: #fff;
+	opacity: .6
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-next-button button:hover,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-previous-button button:hover {
+	color: #fff;
+	opacity: 1
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail .mejs-time-current {
+	background: rgba(255,255,255,.15)
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time-rail .mejs-time-loaded {
+	background: rgba(255,255,255,.05)
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-time span {
+	color: #fff
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button {
+	background: rgba(255,255,255,.2)
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button button:hover {
+	color: #fff
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-player-button:hover {
+	background: rgba(255,255,255,.2)
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-playlist-button button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-toggle-playlist-button button:hover,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button button,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button button:hover {
+	color: #fff
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button .mejs-volume-slider {
+	background: #14181a
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-total {
+	background: rgba(255,255,255,.2)
+}
+
+.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-current,.cue-skin-cuebar.mejs-container .mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-handle {
+	background: #fff
+}
