@@ -1,4 +1,4 @@
-/**
+
  * Cue中文修改版
  *
  * @package Cue
@@ -17,6 +17,9 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: Cue中文修改版
  * Domain Path: /languages
- */
+
  
+ 
+ 
+ 
 预览网址：http://www.wichie.com
